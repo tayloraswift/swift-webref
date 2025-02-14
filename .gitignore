@@ -1,9 +1,8 @@
-.DS_Store
 /.build
+/.vscode
+
+/Node/package-lock.json
+/Node/node_modules
+/Node/idl.json
+
 /Packages
-/*.xcodeproj
-xcuserdata/
-node_modules
-.vscode
-.swiftpm
-data.json
