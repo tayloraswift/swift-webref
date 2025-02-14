@@ -7,26 +7,6 @@ public protocol IDLNamed {
     var name: String { get }
 }
 
-var idlTypes: [String: IDLNode.Type] = [
-    "argument": IDLArgument.self,
-    "attribute": IDLAttribute.self,
-    "callback": IDLCallback.self,
-    "callback interface": IDLCallbackInterface.self,
-    "const": IDLConstant.self,
-    "constructor": IDLConstructor.self,
-    "maplike": IDLMapLikeDeclaration.self,
-    "setlike": IDLSetLikeDeclaration.self,
-    "iterable": IDLIterableDeclaration.self,
-    "dictionary": IDLDictionary.self,
-    "enum": IDLEnum.self,
-    "includes": IDLIncludes.self,
-    "interface": IDLInterface.self,
-    "interface mixin": IDLInterfaceMixin.self,
-    "namespace": IDLNamespace.self,
-    "operation": IDLOperation.self,
-    "typedef": IDLTypedef.self,
-]
-
 private enum TypeKey: String, CodingKey {
     case type
 }
@@ -35,16 +15,37 @@ struct IDLNodeDecoder: Decodable {
     let node: IDLNode
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: TypeKey.self)
-        let type = try container.decode(String.self, forKey: .type)
-        guard let idlType = idlTypes[type] else {
+        let typeName = try container.decode(String.self, forKey: .type)
+        let type:any IDLNode.Type
+
+        switch typeName
+        {
+        case "argument":            type = IDLArgument.self
+        case "attribute":           type = IDLAttribute.self
+        case "callback":            type = IDLCallback.self
+        case "callback interface":  type = IDLCallbackInterface.self
+        case "const":               type = IDLConstant.self
+        case "constructor":         type = IDLConstructor.self
+        case "maplike":             type = IDLMapLikeDeclaration.self
+        case "setlike":             type = IDLSetLikeDeclaration.self
+        case "iterable":            type = IDLIterableDeclaration.self
+        case "dictionary":          type = IDLDictionary.self
+        case "enum":                type = IDLEnum.self
+        case "includes":            type = IDLIncludes.self
+        case "interface":           type = IDLInterface.self
+        case "interface mixin":     type = IDLInterfaceMixin.self
+        case "namespace":           type = IDLNamespace.self
+        case "operation":           type = IDLOperation.self
+        case "typedef":             type = IDLTypedef.self
+        default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
                     codingPath: container.codingPath,
-                    debugDescription: "Unknown type: \(type)"
+                    debugDescription: "Unknown type: \(typeName)"
                 )
             )
         }
 
-        node = try idlType.init(from: decoder)
+        node = try type.init(from: decoder)
     }
 }
