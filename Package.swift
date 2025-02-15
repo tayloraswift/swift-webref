@@ -23,7 +23,10 @@ let package:Package = .init(name: "swift-webref",
         // .executable(name: "WebIDLToSwift", targets: ["WebIDLToSwift"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/swiftwasm/JavaScriptKit.git", from: "0.22.2"),
+        .package(url: "https://github.com/swiftwasm/JavaScriptKit", from: "0.22.2"),
+
+        .package(url: "https://github.com/tayloraswift/swift-io", from: "0.1.0"),
+        .package(url: "https://github.com/tayloraswift/swift-json", from: "1.2.0"),
     ],
     targets: [
         // .executableTarget(
@@ -118,6 +121,13 @@ let package:Package = .init(name: "swift-webref",
             .product(name: "JavaScriptEventLoop", package: "JavaScriptKit"),
             .product(name: "JavaScriptBigIntSupport", package: "JavaScriptKit"),
         ]),
+
+        .executableTarget(name: "WebIDL_",
+            dependencies: [
+                .product(name: "System_ArgumentParser", package: "swift-io"),
+                .product(name: "SystemIO", package: "swift-io"),
+                .product(name: "JSON", package: "swift-json"),
+            ]),
 
         /*
         .target(name: "WebIDL"),
