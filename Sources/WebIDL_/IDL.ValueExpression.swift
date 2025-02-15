@@ -18,7 +18,7 @@ extension IDL
 extension IDL.ValueExpression:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case type
         case value
@@ -26,7 +26,7 @@ extension IDL.ValueExpression:JSONObjectDecodable
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         switch try json[.type].decode(to: IDL.ValueExpressionType.self)
         {

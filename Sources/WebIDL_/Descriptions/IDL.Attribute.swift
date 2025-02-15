@@ -3,45 +3,45 @@ import JSON
 extension IDL
 {
     @frozen public
-    struct Operation
+    struct Attribute
     {
         public
         let name:String
         public
-        let type:Metatype?
+        let type:TypeMetadata
         public
         let special:String
         public
-        let arguments:[Argument]
+        let readonly:Bool
         public
         let extAttrs:[ExtendedAttribute]
     }
 }
-extension IDL.Operation:IDL.NominalNode, IDL.InterfaceMember
+extension IDL.Attribute:IDL.NominalNode, IDL.InterfaceMember, IDL.NamespaceMember
 {
     @inlinable public
-    static var type:IDL.NodeType { .operation }
+    static var type:IDL.NodeType { .attribute }
 }
-extension IDL.Operation:JSONObjectDecodable
+extension IDL.Attribute:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case name
         case idlType
         case special
-        case arguments
+        case readonly
         case extAttrs
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         self.init(
             name: try json[.name].decode(),
             type: try json[.idlType].decode(),
             special: try json[.special].decode(),
-            arguments: try json[.arguments].decode(),
+            readonly: try json[.readonly].decode(),
             extAttrs: try json[.extAttrs].decode())
     }
 }

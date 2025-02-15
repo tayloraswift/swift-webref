@@ -21,7 +21,7 @@ extension IDL.Enum:IDL.NominalNode
 extension IDL.Enum:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case name
         case values
@@ -29,7 +29,7 @@ extension IDL.Enum:JSONObjectDecodable
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         self.init(name: try json[.name].decode(),
             cases: try json[.values].decode(to: [IDL.ValueNest].self).map(\.value),

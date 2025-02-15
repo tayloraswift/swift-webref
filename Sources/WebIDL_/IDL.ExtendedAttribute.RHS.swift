@@ -19,14 +19,14 @@ extension IDL.ExtendedAttribute
 extension IDL.ExtendedAttribute.RHS:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case type
         case value
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         switch try json[.type].decode(to: TypeDiscriminator.self)
         {

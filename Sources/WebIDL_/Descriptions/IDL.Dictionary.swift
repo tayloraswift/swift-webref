@@ -2,14 +2,13 @@ import JSON
 
 extension IDL
 {
-    /// https://github.com/w3c/webidl2.js#interface
     @frozen public
-    struct Interface
+    struct Dictionary
     {
         public
         let name:String
         public
-        let members:[any InterfaceMember]
+        let members:[Member]
         public
         let partial:Bool
         public
@@ -18,15 +17,15 @@ extension IDL
         let extAttrs:[ExtendedAttribute]
     }
 }
-extension IDL.Interface:IDL.NominalNode
+extension IDL.Dictionary:IDL.NominalNode
 {
     @inlinable public
-    static var type:IDL.NodeType { .interface }
+    static var type:IDL.NodeType { .dictionary }
 }
-extension IDL.Interface:JSONObjectDecodable
+extension IDL.Dictionary:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case name
         case members
@@ -36,11 +35,11 @@ extension IDL.Interface:JSONObjectDecodable
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         self.init(
             name: try json[.name].decode(),
-            members: try .decode(from: json[.members]),
+            members: try json[.members].decode(),
             partial: try json[.partial].decode(),
             inheritance: try json[.inheritance].decode(),
             extAttrs: try json[.extAttrs].decode())

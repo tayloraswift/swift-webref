@@ -13,20 +13,20 @@ extension IDL
 }
 extension IDL.Constructor:IDL.SyntaxNode, IDL.InterfaceMember
 {
-    public
+    @inlinable public
     static var type:IDL.NodeType { .constructor }
 }
 extension IDL.Constructor:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case arguments
         case extAttrs
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         self.init(
             arguments: try json[.arguments].decode(),

@@ -3,7 +3,7 @@ import JSON
 extension IDL
 {
     @frozen public
-    struct Metatype
+    struct TypeMetadata
     {
         let name:String?
         let children:[Self]
@@ -11,10 +11,10 @@ extension IDL
         let extAttrs:[ExtendedAttribute]
     }
 }
-extension IDL.Metatype:JSONObjectDecodable
+extension IDL.TypeMetadata:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case extAttrs
         case generic
@@ -24,7 +24,7 @@ extension IDL.Metatype:JSONObjectDecodable
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         let generic:String = try json[.generic].decode()
 

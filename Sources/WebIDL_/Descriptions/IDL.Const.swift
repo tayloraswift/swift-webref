@@ -8,14 +8,14 @@ extension IDL
         public
         let name:String
         public
-        let type:Metatype
+        let type:TypeMetadata
         public
         let value:ValueExpression?
         public
         let extAttrs:[ExtendedAttribute]
     }
 }
-extension IDL.Const:IDL.NominalNode, IDL.InterfaceMember
+extension IDL.Const:IDL.NominalNode, IDL.InterfaceMember, IDL.NamespaceMember
 {
     @inlinable public
     static var type:IDL.NodeType { .const }
@@ -23,7 +23,7 @@ extension IDL.Const:IDL.NominalNode, IDL.InterfaceMember
 extension IDL.Const:JSONObjectDecodable
 {
     public
-    enum CodingKeys:String, Sendable
+    enum CodingKey:String, Sendable
     {
         case name
         case idlType
@@ -32,7 +32,7 @@ extension IDL.Const:JSONObjectDecodable
     }
 
     public
-    init(json:JSON.ObjectDecoder<CodingKeys>) throws
+    init(json:JSON.ObjectDecoder<CodingKey>) throws
     {
         self.init(name: try json[.name].decode(),
             type: try json[.idlType].decode(),
