@@ -2,8 +2,10 @@ import JSON
 
 extension IDL
 {
+    @frozen public
     struct AnyNode
     {
+        public
         let cast:any SyntaxNode
     }
 }
@@ -21,6 +23,7 @@ extension IDL.AnyNode
 }
 extension IDL.AnyNode:JSONDecodable
 {
+    public
     init(json:JSON.Node) throws
     {
         // Deduce the type of the node

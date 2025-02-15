@@ -124,13 +124,18 @@ let package:Package = .init(name: "swift-webref",
 
         .executableTarget(name: "WebIDL_",
             dependencies: [
+                .target(name: "WebIDL"),
+
                 .product(name: "System_ArgumentParser", package: "swift-io"),
                 .product(name: "SystemIO", package: "swift-io"),
                 .product(name: "JSON", package: "swift-json"),
             ]),
 
+        .target(name: "WebIDL",
+            dependencies: [
+                .product(name: "JSON", package: "swift-json"),
+            ]),
         /*
-        .target(name: "WebIDL"),
 
         .executableTarget(
             name: "WebIDLToSwift",

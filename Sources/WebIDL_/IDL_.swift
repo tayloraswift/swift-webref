@@ -2,6 +2,7 @@ import ArgumentParser
 import JSON
 import System_ArgumentParser
 import SystemIO
+import WebIDL
 
 @main
 struct Main:ParsableCommand
@@ -17,9 +18,4 @@ struct Main:ParsableCommand
         let modules:[String: [IDL.AnyNode]] = try json.decode()
         print([_].init(modules.keys))
     }
-}
-
-public
-enum IDL
-{
 }
