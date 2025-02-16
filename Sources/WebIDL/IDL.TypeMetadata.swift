@@ -3,7 +3,7 @@ import JSON
 extension IDL
 {
     @frozen public
-    struct TypeMetadata
+    struct TypeMetadata:Sendable
     {
         let name:String?
         let children:[Self]

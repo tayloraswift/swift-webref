@@ -16,6 +16,9 @@ struct Main:ParsableCommand
         print(json.utf8.count)
 
         let modules:[String: [IDL.AnyNode]] = try json.decode()
-        print([_].init(modules.keys))
+        for module:IDL.SwiftModule in [.JavaScriptInterop, .JavaScriptDOM]
+        {
+            let toplevel:IDL.SwiftModule.Toplevel = try module.constituents(in: modules)
+        }
     }
 }

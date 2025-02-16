@@ -3,7 +3,7 @@ import JSON
 extension IDL
 {
     @frozen public
-    struct AnyNode
+    struct AnyNode:Sendable
     {
         public
         let cast:any SyntaxNode

@@ -3,7 +3,7 @@ import JSON
 extension IDL
 {
     public
-    protocol SyntaxNode:JSONObjectDecodable
+    protocol SyntaxNode:JSONObjectDecodable, Sendable
     {
         static var type:NodeType { get }
 
